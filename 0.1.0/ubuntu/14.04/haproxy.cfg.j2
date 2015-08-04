@@ -1,0 +1,48 @@
+global
+    daemon
+    maxconn 4096
+
+defaults
+    mode http
+    timeout connect 10s
+    timeout client 1m
+    timeout server 1m
+
+frontend http-in80
+    bind *:80
+
+{% for app in apps %}
+{% for portMapping in app.container.docker.portMappings %}
+
+    acl host_{{ app.id | regex_replace('/(.*)$', '\\1') }} hdr_beg(host) -i {{ app.id | regex_replace('/(.*)$', '\\1') }}.
+    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }} if host_{{ app.id | regex_replace('/(.*)$', '\\1') }}
+
+{% endfor %}
+{% endfor %}
+
+{% for app in apps %}
+{% for portMapping in app.container.docker.portMappings %}
+
+frontend http-in{{ portMapping.servicePort }}
+    bind *:{{ portMapping.servicePort }}
+    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }}
+
+{% endfor %}
+{% endfor %}
+
+{% for app in apps %}
+{% set i = 0 %}
+{% for portMapping in app.container.docker.portMappings %}
+
+backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }}
+
+{% for task in app.tasks %}
+
+{% if task.healthCheckResults and task.healthCheckResults[-1].alive %}
+    server server{{ loop.index }} {{ task.host }}:{{ task.ports[i] }} check
+{% endif %}
+
+{% endfor %}
+{% set i = i + 1 %}
+{% endfor %}
+{% endfor %}
