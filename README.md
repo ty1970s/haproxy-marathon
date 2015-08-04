@@ -4,7 +4,7 @@
 
 Generate HAProxy configuration (using Marathon as a data source)
 
-See https://github.com/pdericson/haproxy
+See https://github.com/mesoscloud/haproxy
 
 ## Ubuntu
 
