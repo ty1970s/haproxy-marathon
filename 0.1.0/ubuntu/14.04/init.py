@@ -18,7 +18,7 @@ def main():
 
     logging.basicConfig()
 
-    zk = kazoo.client.KazooClient(hosts=os.getenv('ZK', 'localhost:2181'), read_only=True)
+    zk = kazoo.client.KazooClient(hosts=os.getenv('ZK', 'localhost:2181'))
     zk.start()
 
     #
