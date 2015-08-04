@@ -39,7 +39,7 @@ backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort 
 {% for task in app.tasks %}
 
 {% if task.healthCheckResults and task.healthCheckResults[-1].alive %}
-    server server{{ loop.index }} {{ task.host }}:{{ task.ports[i] }} check
+    server server{{ ("%s:%s" % (task.host, task.ports[i])) | regex_replace('[^a-z0-9]', '-') }} {{ task.host }}:{{ task.ports[i] }} check
 {% endif %}
 
 {% endfor %}
