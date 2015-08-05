@@ -36,6 +36,10 @@ frontend http-in{{ portMapping.servicePort }}
 
 backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }}
 
+{% if i == 0 and app.labels.mode is defined %}
+    mode {{ app.labels.mode }}
+{% endif %}
+
 {% for task in app.tasks %}
 
 {% if task.healthCheckResults and task.healthCheckResults[-1].alive %}
