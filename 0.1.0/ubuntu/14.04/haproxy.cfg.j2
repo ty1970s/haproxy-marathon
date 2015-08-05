@@ -14,8 +14,10 @@ frontend http-in80
 {% for app in apps %}
 {% for portMapping in app.container.docker.portMappings %}
 
+{% if app.labels.mode is undefined %}
     acl host_{{ app.id | regex_replace('/(.*)$', '\\1') }} hdr_beg(host) -i {{ app.id | regex_replace('/(.*)$', '\\1') }}.
     use_backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }} if host_{{ app.id | regex_replace('/(.*)$', '\\1') }}
+{% endif %}
 
 {% endfor %}
 {% endfor %}
