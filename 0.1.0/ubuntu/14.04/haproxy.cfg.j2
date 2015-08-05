@@ -27,6 +27,11 @@ frontend http-in80
 
 frontend http-in{{ portMapping.servicePort }}
     bind *:{{ portMapping.servicePort }}
+
+{% if app.labels.mode is defined %}
+    mode {{ app.labels.mode }}
+{% endif %}
+
     use_backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }}
 
 {% endfor %}
