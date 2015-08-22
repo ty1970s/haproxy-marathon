@@ -1,10 +1,8 @@
-- build: 0.1.0/ubuntu/14.04
+- build: 0.1.0
   image:
-    - mesoscloud/haproxy-marathon:0.1.0-ubuntu-14.04
-    - mesoscloud/haproxy-marathon:0.1.0-ubuntu
     - mesoscloud/haproxy-marathon:0.1.0
     - mesoscloud/haproxy-marathon:latest
 
 
 - tests:
-    - cmd: python -m doctest ./init.py
+    - cmd: python -m doctest ./app.py

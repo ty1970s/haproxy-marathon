@@ -57,7 +57,7 @@ def main():
         environment = jinja2.Environment()
         environment.filters['regex_replace'] = regex_replace
 
-        with open('/haproxy.cfg.j2') as f:
+        with open('files/haproxy.cfg.j2') as f:
             x = f.read()
         template = environment.from_string(x)
 
@@ -67,7 +67,7 @@ def main():
         data, stat = zk.get("/haproxy/config")
 
         if haproxy_cfg != data:
-            print >>sys.stderr, "set"
+            print("set", file=sys.stderr)
             zk.set("/haproxy/config", haproxy_cfg.encode('utf-8'))
         time.sleep(10)
 

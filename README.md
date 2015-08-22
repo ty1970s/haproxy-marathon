@@ -13,8 +13,8 @@ See https://github.com/mesoscloud/haproxy
 e.g.
 
 ```
-docker run -d
--e MARATHON=node-1:8080
--e ZK=node-1:2181
+docker run -d \
+-e MARATHON=node-1:8080 \
+-e ZK=node-1:2181 \
 --name=haproxy --net=host --restart=always mesoscloud/haproxy-marathon:0.1.0-ubuntu-14.04
 ```
