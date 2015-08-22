@@ -24,7 +24,7 @@ def main():
     #
     zk.ensure_path("/haproxy")
     try:
-        zk.create("/haproxy/config", "")
+        zk.create("/haproxy/config", b"")
     except kazoo.exceptions.NodeExistsError:
         pass
 
@@ -37,13 +37,13 @@ def main():
         p = subprocess.Popen(["curl", "-fsS", "http://%s/v2/apps" % marathon], stdout=subprocess.PIPE)
         assert p.wait() == 0
 
-        appIds = [app['id'] for app in json.load(p.stdout)['apps']]
+        appIds = [app['id'] for app in json.loads(p.stdout.read().decode('utf-8'))['apps']]
 
         for appId in appIds:
             p = subprocess.Popen(["curl", "-fsS", "http://%s/v2/apps%s" % (marathon, appId)], stdout=subprocess.PIPE)
             assert p.wait() == 0
 
-            app = json.load(p.stdout)['app']
+            app = json.loads(p.stdout.read().decode('utf-8'))['app']
 
             if not 'portMappings' in app['container']['docker']:
                 continue
@@ -66,7 +66,7 @@ def main():
 
         data, stat = zk.get("/haproxy/config")
 
-        if haproxy_cfg != data:
+        if haproxy_cfg != data.decode('utf-8'):
             print("set", file=sys.stderr)
             zk.set("/haproxy/config", haproxy_cfg.encode('utf-8'))
         time.sleep(10)
