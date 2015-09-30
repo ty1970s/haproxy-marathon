@@ -16,8 +16,8 @@ frontend http-in80
 {% for portMapping in app.container.docker.portMappings %}
 
 {% if app.labels.mode is undefined %}
-    acl host_{{ app.id | regex_replace('/(.*)$', '\\1') }} hdr_beg(host) -i {{ app.id | regex_replace('/(.*)$', '\\1') }}.
-    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }} if host_{{ app.id | regex_replace('/(.*)$', '\\1') }}
+    acl host_{{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }} hdr_beg(host) -i {{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}.
+    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}{{ portMapping.servicePort }} if host_{{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}
 {% endif %}
 
 {% endfor %}
@@ -30,8 +30,8 @@ frontend http-in443
 {% for portMapping in app.container.docker.portMappings %}
 
 {% if app.labels.mode is undefined %}
-    acl host_{{ app.id | regex_replace('/(.*)$', '\\1') }} hdr_beg(host) -i {{ app.id | regex_replace('/(.*)$', '\\1') }}.
-    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }} if host_{{ app.id | regex_replace('/(.*)$', '\\1') }}
+    acl host_{{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }} hdr_beg(host) -i {{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}.
+    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}{{ portMapping.servicePort }} if host_{{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}
 {% endif %}
 
 {% endfor %}
@@ -47,7 +47,7 @@ frontend http-in{{ portMapping.servicePort }}
     mode {{ app.labels.mode }}
 {% endif %}
 
-    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }}
+    use_backend {{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}{{ portMapping.servicePort }}
 
 {% endfor %}
 {% endfor %}
@@ -56,7 +56,7 @@ frontend http-in{{ portMapping.servicePort }}
 {% set i = 0 %}
 {% for portMapping in app.container.docker.portMappings %}
 
-backend {{ app.id | regex_replace('/(.*)$', '\\1') }}{{ portMapping.servicePort }}
+backend {{ app.id | regex_replace('/(.*)$', '\\1') | regex_replace('/', '_') }}{{ portMapping.servicePort }}
 
 {% if i == 0 and app.labels.mode is defined %}
     mode {{ app.labels.mode }}
