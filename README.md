@@ -8,7 +8,7 @@ See https://github.com/mesoscloud/haproxy
 
 ## Python
 
-[![](https://badge.imagelayers.io/mesoscloud/haproxy-marathon:0.1.0.svg)](https://imagelayers.io/?images=mesoscloud/haproxy-marathon:0.1.0)
+[![](https://badge.imagelayers.io/mesoscloud/haproxy-marathon:0.2.1.svg)](https://imagelayers.io/?images=mesoscloud/haproxy-marathon:0.2.1)
 
 e.g.
 
@@ -16,5 +16,5 @@ e.g.
 docker run -d \
 -e MARATHON=node-1:8080 \
 -e ZK=node-1:2181 \
---name=haproxy --net=host --restart=always mesoscloud/haproxy-marathon:0.1.0
+--name=haproxy --net=host --restart=always mesoscloud/haproxy-marathon:0.2.1
 ```

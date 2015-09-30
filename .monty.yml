@@ -1,7 +1,11 @@
+- build: 0.2.1
+  image:
+    - mesoscloud/haproxy-marathon:0.2.1
+    - mesoscloud/haproxy-marathon:latest
+
 - build: 0.2.0
   image:
     - mesoscloud/haproxy-marathon:0.2.0
-    - mesoscloud/haproxy-marathon:latest
 
 - build: 0.1.1
   image:
