@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/mesoscloud/haproxy-marathon.svg?branch=master)](https://travis-ci.org/mesoscloud/haproxy-marathon)
+[![Docker Stars](https://img.shields.io/docker/stars/mesoscloud/haproxy-marathon.svg)](https://hub.docker.com/r/mesoscloud/haproxy-marathon/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/mesoscloud/haproxy-marathon.svg)](https://hub.docker.com/r/mesoscloud/haproxy-marathon/)
+
 # haproxy-marathon
 
 [![Join the chat at https://gitter.im/mesoscloud/mesoscloud](https://badges.gitter.im/mesoscloud/mesoscloud.svg)](https://gitter.im/mesoscloud/mesoscloud?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
