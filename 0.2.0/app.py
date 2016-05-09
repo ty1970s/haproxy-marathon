@@ -59,7 +59,7 @@ def main():
 
             app = json.loads(p.stdout.read().decode('utf-8'))['app']
 
-            if not 'portMappings' in app['container']['docker']:
+            if 'portMappings' not in app['container']['docker']:
                 continue
 
             apps.append(app)
